@@ -1,13 +1,6 @@
-# http://shiny.rstudio.com/gallery/update-input-demo.html
 library(shiny)
 library(sweidnumbr)
 library(dplyr)
-
-# runApp("demo_upd_input",display.mode = "showcase")
-# runApp("demo_faithful",display.mode = "showcase")
-# runApp("demo_text",display.mode = "showcase")
-
-# runApp()
 
 # Wrapper function for sweidnumbr::pin_ctrl to set failing pin input to FALSE and valid to TRUE
 pin_ctrl2 <- Vectorize({
@@ -42,8 +35,6 @@ ui <- fluidPage(
   h5("Result:"),
   textOutput("result1"),
   textOutput("result2")
-#   p("Mer text"),
-#   p("en till rad")
 )
 
 server <- function(input, output) {
@@ -80,15 +71,6 @@ server <- function(input, output) {
 
 }
 
-
 shinyApp(server = server, ui = ui)
-# 
-# sweidnumbr::pin_birthplace(x)
-# pin_birthplace("19121212-1212") %>% as.numeric()
-# pin_birthplace("121212-1212") %>% as.numeric()
-# 
-# pin_birthplace("19121212-1212") %>% as.character()
-# 
-# if (!(pin_ctrl2("121212-1212") & !oin_ctrl2("121212-1212"))){ cat("apa")}
 
-shiny::runApp()
+# shiny::runApp()
