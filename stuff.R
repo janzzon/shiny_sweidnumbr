@@ -75,3 +75,5 @@ shinyApp(server = server, ui = ui)
 
 # shiny::runApp()
 # shinyapps::deployApp()
+# setwd("./ddp_presentation/")
+# slidify::publish(title = 'DDP Presentation', 'index.html', host = 'rpubs')
