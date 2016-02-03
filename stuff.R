@@ -74,3 +74,4 @@ server <- function(input, output) {
 shinyApp(server = server, ui = ui)
 
 # shiny::runApp()
+# shinyapps::deployApp()
