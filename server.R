@@ -1,27 +1,14 @@
 library(shiny)
 library(sweidnumbr)
 library(dplyr)
-
-# Wrapper function for sweidnumbr::pin_ctrl to set failing pin input to FALSE and valid to TRUE
-pin_ctrl2 <- Vectorize({
-  function(x) {
-    ifelse (!is.na(try(suppressWarnings(suppressMessages(pin_ctrl(x))),silent = TRUE)) &
-              (class(try(suppressWarnings(pin_ctrl(x)), silent =TRUE)) != "try-error")  ,
-            pin_ctrl(x), FALSE)
-  }
-})
-
-# Wrapper function for sweidnumbr::oin_ctrl to set failing oin input to FALSE and valid to TRUE
-oin_ctrl2 <- Vectorize({
-  function(x) {
-    ifelse ((class(try(suppressWarnings(oin_ctrl(x)), silent =TRUE)) != "try-error"),
-            oin_ctrl(x), FALSE)
-  }
-})
-
+if(!("devtools" %in% installed.packages())) install.packages("devtools")
+if(!try(require(sweidnumbrExtras))){
+  devtools::install_github("janzzon/sweidnumbrExtras")
+  library(sweidnumbrExtras)
+}
 
 server <- function(input, output) {
-  
+  # Trim input string from leadin and trailing white space, assign to reactive function
   input_inmat_pin <- reactive(stringr::str_trim(input$inmatat_pin))
   output$inmatat_pin <- renderText(input$inmatat_pin)
   output$result1 <-
@@ -54,3 +41,22 @@ server <- function(input, output) {
       }}})
   
 }
+
+# Dont't create these functions in script, use pkg from github "janzzon/sweidnumbrExtras"
+# # Wrapper function for sweidnumbr::pin_ctrl to set failing pin input to FALSE and valid to TRUE
+# pin_ctrl2 <- Vectorize({
+#   function(x) {
+#     ifelse (!is.na(try(suppressWarnings(suppressMessages(pin_ctrl(x))),silent = TRUE)) &
+#               (class(try(suppressWarnings(pin_ctrl(x)), silent =TRUE)) != "try-error")  ,
+#             pin_ctrl(x), FALSE)
+#   }
+# })
+# 
+# # Wrapper function for sweidnumbr::oin_ctrl to set failing oin input to FALSE and valid to TRUE
+# oin_ctrl2 <- Vectorize({
+#   function(x) {
+#     ifelse ((class(try(suppressWarnings(oin_ctrl(x)), silent =TRUE)) != "try-error"),
+#             oin_ctrl(x), FALSE)
+#   }
+# })
+# 

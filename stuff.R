@@ -2,22 +2,29 @@ library(shiny)
 library(sweidnumbr)
 library(dplyr)
 
+if(!("devtools" %in% installed.packages())) install.packages("devtools")
+
+if(!try(require(sweidnumbrExtras))){
+  devtools::install_github("janzzon/sweidnumbrExtras")
+  library(sweidnumbrExtras)
+}
+
 # Wrapper function for sweidnumbr::pin_ctrl to set failing pin input to FALSE and valid to TRUE
-pin_ctrl2 <- Vectorize({
-  function(x) {
-    ifelse (!is.na(try(suppressWarnings(suppressMessages(pin_ctrl(x))),silent = TRUE)) &
-              (class(try(suppressWarnings(pin_ctrl(x)), silent =TRUE)) != "try-error")  ,
-            pin_ctrl(x), FALSE)
-  }
-})
+# pin_ctrl2 <- Vectorize({
+#   function(x) {
+#     ifelse (!is.na(try(suppressWarnings(suppressMessages(pin_ctrl(x))),silent = TRUE)) &
+#               (class(try(suppressWarnings(pin_ctrl(x)), silent =TRUE)) != "try-error")  ,
+#             pin_ctrl(x), FALSE)
+#   }
+# })
 
 # Wrapper function for sweidnumbr::oin_ctrl to set failing oin input to FALSE and valid to TRUE
-oin_ctrl2 <- Vectorize({
-  function(x) {
-    ifelse ((class(try(suppressWarnings(oin_ctrl(x)), silent =TRUE)) != "try-error"),
-            oin_ctrl(x), FALSE)
-  }
-})
+# oin_ctrl2 <- Vectorize({
+#   function(x) {
+#     ifelse ((class(try(suppressWarnings(oin_ctrl(x)), silent =TRUE)) != "try-error"),
+#             oin_ctrl(x), FALSE)
+#   }
+# })
 
 # Generate a random but valid pin no from data set sweidnumbr::fake_pins
 rnd_fake_pin <- function() {
