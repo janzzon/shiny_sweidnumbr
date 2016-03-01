@@ -3,17 +3,17 @@ library(sweidnumbr)
 library(dplyr)
 
 # Wrapper function for sweidnumbr::pin_ctrl to set failing pin input to FALSE and valid to TRUE
-pin_ctrl2 <- Vectorize({
-  function(x) {
-    ifelse (!is.na(try(suppressWarnings(suppressMessages(pin_ctrl(x))),silent = TRUE)) &
-              (class(try(suppressWarnings(pin_ctrl(x)), silent =TRUE)) != "try-error")  ,
-            pin_ctrl(x), FALSE)
-  }
-})
+# pin_ctrl2 <- Vectorize({
+#   function(x) {
+#     ifelse (!is.na(try(suppressWarnings(suppressMessages(pin_ctrl(x))),silent = TRUE)) &
+#               (class(try(suppressWarnings(pin_ctrl(x)), silent =TRUE)) != "try-error")  ,
+#             pin_ctrl(x), FALSE)
+#   }
+# })
 
 # Generate a random but valid pin no from data set sweidnumbr::fake_pins
 rnd_fake_pin <- function() {
-  fake_pins_valid <- sweidnumbr::fake_pins$pin[pin_ctrl2(fake_pins$pin)]
+  fake_pins_valid <- sweidnumbr::fake_pins$pin[pin_ctrl(fake_pins$pin, force_logical = TRUE)]
   fake_pins_valid[sample(1:length(fake_pins_valid), 1)]
 }
 # rnd_fake_pin()
